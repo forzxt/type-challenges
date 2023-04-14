@@ -10,7 +10,9 @@ type cases = [
 ];
 
 // ============= Your Code Here =============
-type Flatten<T extends any[], A extends any[] = []> = T extends [[[[infer P]]]]
+type Flatten<T, A extends any[] = []> = T extends [[[[infer P]]]]
+    ? [...A, P]
+    : T extends [[[infer P]]]
     ? [...A, P]
     : T extends [[infer P]]
     ? [...A, P]
@@ -18,4 +20,4 @@ type Flatten<T extends any[], A extends any[] = []> = T extends [[[[infer P]]]]
     ? [...A, P]
     : T extends [infer F, ...infer R]
     ? Flatten<R, [...A, F]>
-    : A;
+    : T;

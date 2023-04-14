@@ -5,10 +5,11 @@ type cases = [
   Expect<Equal<LengthOfString<''>, 0>>,
   Expect<Equal<LengthOfString<'kumiko'>, 6>>,
   Expect<Equal<LengthOfString<'reina'>, 5>>,
-  Expect<Equal<LengthOfString<'Sound! Euphonium'>, 16>>
+  Expect<Equal<LengthOfString<'Sound! Euphonium'>, 16>>,
 ]
 
+
 // ============= Your Code Here =============
-type LengthOfString<S extends string> = S extends [...infer Arr]
-  ?  Arr['length']
-  : 0
+type LengthOfString<S extends string, Arr extends any[] = []> = S extends `${infer F extends string}${infer R}`
+  ? LengthOfString<R, [...Arr, any]>
+  : Arr['length']

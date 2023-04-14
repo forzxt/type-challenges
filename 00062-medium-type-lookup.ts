@@ -20,7 +20,4 @@ type cases = [
 ]
 
 // ============= Your Code Here =============
-type LookUp<U extends { type: string }, T extends string > =Equal<U['type'], T> extends true
-  ? U
-  : U
-type a = LookUp<Animal, 'dog'>
+type LookUp<U, T  > =U extends {type: T} ? U : never;
