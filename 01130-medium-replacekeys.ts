@@ -64,4 +64,7 @@ type cases = [
 ]
 
 // ============= Your Code Here =============
-type ReplaceKeys<U, T extends keyof {}, Y> = Omit<U, T> & Y
+type ReplaceKeys<U, T extends keyof any, Y> = 
+ Omit<U, T> &  Omit<Y,keyof U>
+
+type A = ReplaceKeys<Nodes, 'name' | 'flag', { name: number; flag: string }>
