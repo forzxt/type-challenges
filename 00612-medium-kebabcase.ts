@@ -14,11 +14,13 @@ type cases = [
 ]
 
 // ============= Your Code Here =============
-// todo 首字母前面-取掉
-type KebabCase<S> = S extends string
+
+type KebabCase<S, isFirst extends boolean = false> = S extends string
   ? S extends `${infer F}${infer R}`
     ? F extends Lowercase<F>
-      ? `${F}${KebabCase<R>}`
-      : `-${Lowercase<F>}${KebabCase<R>}`
+      ? `${F}${KebabCase<R, true>}`
+      : isFirst extends false
+      ? `${Lowercase<F>}${KebabCase<R, true>}`
+      : `-${Lowercase<F>}${KebabCase<R, isFirst>}`
     : S
   : S
