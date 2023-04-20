@@ -8,7 +8,7 @@ type cases = [
   Expect<Equal<MinusOne<100>, 99>>,
   Expect<Equal<MinusOne<1101>, 1100>>,
   Expect<Equal<MinusOne<0>, -1>>,
-  Expect<Equal<MinusOne<9_007_199_254_740_992>, 9_007_199_254_740_991>>
+  Expect<Expect<Equal<MinusOne<9_007_199_254_740_992>, 9_007_199_254_740_991>>
 ]
 
 // ============= Your Code Here =============
@@ -18,4 +18,3 @@ type MinusOne<T extends number, Arr extends any[] = []> = T extends 0
   ? Arr['length']
   : MinusOne<T, [0, ...Arr]>
 
-type A = MinusOne<9_007_199_254_740_992>
