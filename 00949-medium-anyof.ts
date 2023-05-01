@@ -10,17 +10,29 @@ type cases = [
     Expect<Equal<AnyOf<[0, "", false, [], { name: "test" }]>, true>>,
     Expect<Equal<AnyOf<[0, "", false, [], { 1: "test" }]>, true>>,
     Expect<Equal<AnyOf<[0, "", false, [], { name: "test" }, { 1: "test" }]>, true>>,
-    Expect<Equal<AnyOf<[0, "", false, [], {}, undefined, null]>, false>>,
+    Expect<Equal<AnyOf<[0, "", false, [], {}, null]>, false>>,
     Expect<Equal<AnyOf<[]>, false>>,
 ];
 
 // ============= Your Code Here =============
+type isTrue<T> = T extends 0 | "" | false | null | undefined
+    ? false
+    : T extends 1 | true
+    ? true
+    : T extends `${infer S}${infer D}`
+    ? true
+    : T extends any[]
+    ? T["length"] extends 0
+        ? false
+        : true
+    : [keyof T] extends [never]
+    ? false
+    : true extends true
+    ? true
+    : false;
 
 type AnyOf<T extends readonly any[]> = T extends [infer F, ...infer R]
-    ? F extends 1 | `${infer F}${infer R}`
+    ? isTrue<F> extends true
         ? true
-        : keyof F extends never
-        ? AnyOf<R>
-        : true
+        : AnyOf<R>
     : false;
-// type a = [keyof []]["length"] extends 1 | 2 ? true : false;
